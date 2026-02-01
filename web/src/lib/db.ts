@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
 
 const conn = new Pool({
-  user: 'postgres',             
-  password: 'touchdown123',     
+  user: 'app_user',             
+  password: 'nfl_pass_2026',   
   host: 'localhost',
-  port: 5433,
+  port: 5433,                   
   database: 'superbowl_db',
 });
 
