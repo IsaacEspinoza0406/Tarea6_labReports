@@ -117,6 +117,19 @@ Se utilizó IA generativa como asistente de desarrollo para los siguientes punto
 * **Prompt:** *"Crea un componente de Next.js que muestre una tabla de datos traídos de Postgres con `pg`."*
 * **Corrección:** El código generado usaba `useEffect` (Client Component). Se refactorizó manualmente a **Server Component** (`async function Page()`) para proteger las credenciales de la BD y mejorar el SEO/Performance.
 
+## Verificación Automática.
+
+El proyecto incluye un script de validación (`scripts/verify.sh`) para asegurar que las 5 vistas responden correctamente y que el usuario `app_user` tiene los permisos adecuados.
+
+Para ejecutarlo:
+
+```bash
+# 1. Dar permisos de ejecución.
+chmod +x scripts/verify.sh
+
+# 2. Correr el script de prueba
+./scripts/verify.sh
+
 # Estructura del proyecto.
 
 1. /db: Contiene toda la lógica de base de datos (Schema, Seeds, Vistas, Roles, Índices).
