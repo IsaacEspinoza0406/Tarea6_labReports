@@ -119,8 +119,8 @@ Se utilizó IA generativa como asistente de desarrollo para los siguientes punto
 
 # Estructura del proyecto.
 
-/db: Contiene toda la lógica de base de datos (Schema, Seeds, Vistas, Roles, Índices).
-/web: Aplicación Next.js.
-/src/app/reports: Páginas dinámicas para cada reporte.
-/src/lib: Configuración de conexión segura a PostgreSQL.
-docker-compose.yml: Orquestación de servicios y redes.
+1. /db: Contiene toda la lógica de base de datos (Schema, Seeds, Vistas, Roles, Índices).
+2. /web: Aplicación Next.js.
+3. /src/app/reports: Páginas dinámicas para cada reporte.
+4. /src/lib: Configuración de conexión segura a PostgreSQL.
+5. docker-compose.yml: Orquestación de servicios y redes.
