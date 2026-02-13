@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import { pool } from "@/lib/db";
-import { ArrowLeft, Calendar } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 export default async function Report5Page() {
-  const { rows } = await pool.query("SELECT * FROM vw_monthly_metrics");
+  // NUEVA VISTA: view_5_sales_running_total
+  const { rows } = await pool.query("SELECT * FROM view_5_sales_running_total ORDER BY created_at DESC LIMIT 20");
 
   return (
     <div className="min-h-screen bg-gray-900 p-8">
@@ -15,26 +16,24 @@ export default async function Report5Page() {
       </Link>
 
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-2">Reporte 5: Métricas Mensuales</h1>
-        <p className="text-gray-400 mb-8">Ingresos agrupados por mes de venta.</p>
+        <h1 className="text-3xl font-bold text-white mb-2">📅 Ventas Acumuladas (Window Fn)</h1>
+        <p className="text-gray-400 mb-8">Suma acumulativa (Running Total) usando Window Functions.</p>
 
         <div className="bg-gray-800 rounded-lg shadow overflow-hidden border-t-4 border-orange-500">
           <table className="min-w-full divide-y divide-gray-700">
             <thead className="bg-black text-white">
               <tr>
-                <th className="px-6 py-3 text-left">Mes</th>
-                <th className="px-6 py-3 text-left">Total Órdenes</th>
-                <th className="px-6 py-3 text-left">Ingresos ($)</th>
+                <th className="px-6 py-3 text-left">Fecha</th>
+                <th className="px-6 py-3 text-left">Monto Orden</th>
+                <th className="px-6 py-3 text-left">Acumulado Histórico</th>
               </tr>
             </thead>
             <tbody className="bg-gray-800 divide-y divide-gray-700">
-              {rows.map((row: any, index: number) => (
-                <tr key={index} className="hover:bg-gray-700">
-                  <td className="px-6 py-4 font-bold text-white flex items-center">
-                    <Calendar className="w-4 h-4 mr-2 text-orange-400"/> {row.mes}
-                  </td>
-                  <td className="px-6 py-4 text-gray-400">{row.total_ordenes}</td>
-                  <td className="px-6 py-4 text-green-400 font-bold">${Number(row.ingresos_mes).toLocaleString()}</td>
+              {rows.map((row: any, i: number) => (
+                <tr key={i} className="hover:bg-gray-700">
+                  <td className="px-6 py-4 text-gray-400">{new Date(row.created_at).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 text-white font-bold">${row.total}</td>
+                  <td className="px-6 py-4 text-orange-400 font-bold">${Number(row.running_total_revenue).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

@@ -6,10 +6,12 @@ import { ArrowLeft, DollarSign, TrendingUp } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function Report1Page() {
-  const { rows } = await pool.query("SELECT * FROM vw_sales_by_category");
+  // Conectamos a la NUEVA vista
+  const { rows } = await pool.query("SELECT * FROM view_1_sales_by_category");
 
-  const totalVentas = rows.reduce((acc: number, row: any) => acc + Number(row.ventas_totales || 0), 0);
-  const totalItems = rows.reduce((acc: number, row: any) => acc + Number(row.total_items_vendidos || 0), 0);
+  // Nombres de columnas actualizados (total_revenue, total_items_sold)
+  const totalVentas = rows.reduce((acc: number, row: any) => acc + Number(row.total_revenue || 0), 0);
+  const totalItems = rows.reduce((acc: number, row: any) => acc + Number(row.total_items_sold || 0), 0);
 
   return (
     <div className="min-h-screen bg-gray-900 p-8">
@@ -18,23 +20,17 @@ export default async function Report1Page() {
       </Link>
 
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-2">Reporte 1: Ventas por Categoría</h1>
-        <p className="text-gray-400 mb-8">Desglose de ingresos generados por cada línea de negocio.</p>
+        <h1 className="text-3xl font-bold text-white mb-2">📊 Reporte 1: Ventas por Categoría</h1>
+        <p className="text-gray-400 mb-8">Datos consolidados usando GROUP BY y JOIN.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-green-500 flex justify-between items-center">
-            <div>
-              <p className="text-sm text-gray-400">Ingresos Totales</p>
-              <p className="text-2xl font-bold text-white">${totalVentas.toLocaleString()}</p>
-            </div>
-            <DollarSign className="h-10 w-10 text-green-400 bg-gray-700 rounded-full p-2" />
+          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-green-500">
+             <p className="text-sm text-gray-400">Ingresos Totales</p>
+             <p className="text-2xl font-bold text-white">${totalVentas.toLocaleString()}</p>
           </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-blue-500 flex justify-between items-center">
-             <div>
-              <p className="text-sm text-gray-400">Items Vendidos</p>
-              <p className="text-2xl font-bold text-white">{totalItems}</p>
-            </div>
-            <TrendingUp className="h-10 w-10 text-blue-400 bg-gray-700 rounded-full p-2" />
+          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-blue-500">
+             <p className="text-sm text-gray-400">Items Vendidos</p>
+             <p className="text-2xl font-bold text-white">{totalItems}</p>
           </div>
         </div>
 
@@ -42,19 +38,19 @@ export default async function Report1Page() {
           <table className="min-w-full divide-y divide-gray-700">
             <thead className="bg-black text-white">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Categoría</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Items Vendidos</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Total Ventas ($)</th>
+                <th className="px-6 py-3 text-left">Categoría</th>
+                <th className="px-6 py-3 text-left">Items</th>
+                <th className="px-6 py-3 text-left">Ticket Promedio</th>
+                <th className="px-6 py-3 text-left">Total ($)</th>
               </tr>
             </thead>
             <tbody className="bg-gray-800 divide-y divide-gray-700">
-              {rows.map((row: any, index: number) => (
-                <tr key={index} className="hover:bg-gray-700">
-                  <td className="px-6 py-4 font-medium text-white">{row.categoria}</td>
-                  <td className="px-6 py-4 text-gray-400">{row.total_items_vendidos}</td>
-                  <td className="px-6 py-4 text-green-400 font-bold">
-                    ${Number(row.ventas_totales).toLocaleString()}
-                  </td>
+              {rows.map((row: any, i: number) => (
+                <tr key={i} className="hover:bg-gray-700">
+                  <td className="px-6 py-4 font-bold text-white">{row.category_name}</td>
+                  <td className="px-6 py-4 text-gray-400">{row.total_items_sold}</td>
+                  <td className="px-6 py-4 text-gray-400">${Number(row.avg_ticket_price).toLocaleString()}</td>
+                  <td className="px-6 py-4 text-green-400 font-bold">${Number(row.total_revenue).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
