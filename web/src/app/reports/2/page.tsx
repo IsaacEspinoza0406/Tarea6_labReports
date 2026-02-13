@@ -97,6 +97,6 @@ export default async function Report2Page({
             </div>
         )}
       </div>
-    </div>
+    </div>  
   );
 }

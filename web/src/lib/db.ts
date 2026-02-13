@@ -1,11 +1,15 @@
 import { Pool } from 'pg';
 
-const conn = new Pool({
-  user: 'app_user',             
-  password: 'nfl_pass_2026',   
-  host: 'localhost',
-  port: 5433,                   
-  database: 'superbowl_db',
+if (!process.env.POSTGRES_USER || !process.env.POSTGRES_PASSWORD) {
+  throw new Error('Faltan variables de entorno de base de datos');
+}
+
+const pool = new Pool({
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  host: process.env.POSTGRES_HOST,
+  port: parseInt(process.env.POSTGRES_PORT || '5432'),
+  database: process.env.POSTGRES_DB,
 });
 
-export const pool = conn;
+export { pool };
