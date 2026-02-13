@@ -6,10 +6,8 @@ import { ArrowLeft, DollarSign, TrendingUp } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function Report1Page() {
-  // Conectamos a la NUEVA vista
   const { rows } = await pool.query("SELECT * FROM view_1_sales_by_category");
 
-  // Nombres de columnas actualizados (total_revenue, total_items_sold)
   const totalVentas = rows.reduce((acc: number, row: any) => acc + Number(row.total_revenue || 0), 0);
   const totalItems = rows.reduce((acc: number, row: any) => acc + Number(row.total_items_sold || 0), 0);
 
@@ -20,17 +18,28 @@ export default async function Report1Page() {
       </Link>
 
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-2">📊 Reporte 1: Ventas por Categoría</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">Reporte 1: Ventas por Categoría</h1>
         <p className="text-gray-400 mb-8">Datos consolidados usando GROUP BY y JOIN.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-green-500">
-             <p className="text-sm text-gray-400">Ingresos Totales</p>
-             <p className="text-2xl font-bold text-white">${totalVentas.toLocaleString()}</p>
+          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-green-500 flex items-center justify-between">
+             <div>
+                <p className="text-sm text-gray-400">Ingresos Totales</p>
+                <p className="text-2xl font-bold text-white">${totalVentas.toLocaleString()}</p>
+             </div>
+             <div className="p-3 bg-green-900/30 rounded-full">
+                <DollarSign className="w-8 h-8 text-green-400" />
+             </div>
           </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-blue-500">
-             <p className="text-sm text-gray-400">Items Vendidos</p>
-             <p className="text-2xl font-bold text-white">{totalItems}</p>
+
+          <div className="bg-gray-800 p-6 rounded-lg shadow border-l-4 border-blue-500 flex items-center justify-between">
+             <div>
+                <p className="text-sm text-gray-400">Items Vendidos</p>
+                <p className="text-2xl font-bold text-white">{totalItems}</p>
+             </div>
+             <div className="p-3 bg-blue-900/30 rounded-full">
+                <TrendingUp className="w-8 h-8 text-blue-400" />
+             </div>
           </div>
         </div>
 

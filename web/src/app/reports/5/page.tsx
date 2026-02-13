@@ -6,7 +6,6 @@ import { ArrowLeft } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function Report5Page() {
-  // NUEVA VISTA: view_5_sales_running_total
   const { rows } = await pool.query("SELECT * FROM view_5_sales_running_total ORDER BY created_at DESC LIMIT 20");
 
   return (
@@ -16,8 +15,8 @@ export default async function Report5Page() {
       </Link>
 
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-2">📅 Ventas Acumuladas (Window Fn)</h1>
-        <p className="text-gray-400 mb-8">Suma acumulativa (Running Total) usando Window Functions.</p>
+        <h1 className="text-3xl font-bold text-white mb-2">Ventas Acumuladas (Window Fn)</h1>
+        <p className="text-gray-400 mb-8">Suma acumulativa usando Window Functions.</p>
 
         <div className="bg-gray-800 rounded-lg shadow overflow-hidden border-t-4 border-orange-500">
           <table className="min-w-full divide-y divide-gray-700">

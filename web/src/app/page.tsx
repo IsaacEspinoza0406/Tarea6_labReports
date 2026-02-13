@@ -7,7 +7,7 @@ export default function Home() {
       
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-red-500 flex items-center justify-center gap-3 mb-2">
-          🏈 Super Bowl LX Dashboard
+          Super Bowl LX
         </h1>
         <p className="text-gray-300 text-lg">Reportes exclusivos en tiempo real.</p>
       </div>

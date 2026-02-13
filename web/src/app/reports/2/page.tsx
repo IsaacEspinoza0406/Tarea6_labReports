@@ -17,7 +17,6 @@ export default async function Report2Page(props: { searchParams: Promise<any> })
   let rows: any[] = [];
   try {
     if (query) {
-      // NOMBRE NUEVO DE LA VISTA
       const res = await pool.query("SELECT * FROM view_2_vip_fans WHERE fan_name ILIKE $1", [`%${query}%`]);
       rows = res.rows;
     } else {
@@ -33,7 +32,7 @@ export default async function Report2Page(props: { searchParams: Promise<any> })
       </Link>
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-white">🏆 Ranking VIP (CASE + HAVING)</h1>
+          <h1 className="text-3xl font-bold text-white">Ranking VIP</h1>
           <form className="flex gap-2">
             <input name="q" placeholder="Buscar fan..." defaultValue={query} className="bg-gray-800 text-white border border-gray-700 rounded px-3 py-2" />
             <button type="submit" className="bg-yellow-600 text-white p-2 rounded"><Search className="w-5 h-5" /></button>

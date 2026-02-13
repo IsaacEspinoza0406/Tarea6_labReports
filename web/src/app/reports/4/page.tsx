@@ -16,7 +16,7 @@ export default async function Report4Page() {
       </Link>
 
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-2">💎 Comparativa de Precios (CTE)</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">Comparativa de Precios</h1>
         <p className="text-gray-400 mb-8">Uso de Common Table Expressions para comparar vs promedio global.</p>
         
         <div className="bg-gray-800 rounded-lg shadow overflow-hidden border-t-4 border-purple-500">
